@@ -8,32 +8,56 @@ class LandingNewsListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16, top: 8, right: 16, bottom: 4),
-      child: ListTile(
-        titleAlignment: ListTileTitleAlignment.center,
-        leading: Image.network(
-          article?.urlToImage ?? '',
-          fit: BoxFit.cover,
-        ),
-        title: Center(
-          child: Text(
-            article?.title ?? '',
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            maxLines: 2,
-          ),
-        ),
-        subtitle: Row(
-          children: [
-            const Icon(Icons.calendar_month),
-            const SizedBox(
-              width: 8,
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: SizedBox(
+              width: 100,
+              height: 80,
+              child: Image.network(
+                article?.urlToImage ?? '',
+                fit: BoxFit.cover,
+              ),
             ),
-            Text(article?.publishedAt ?? '',
-            )
-          ],
-        ),
-        isThreeLine: true,
+          ),
+          const SizedBox(
+            width: 16,
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Title
+                Text(
+                  article?.title ?? '',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 17),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                // Subtitle
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.calendar_today_outlined,
+                      size: 14,
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Text(article?.publishedAt ?? ''),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

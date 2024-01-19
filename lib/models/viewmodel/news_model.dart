@@ -4,6 +4,139 @@ class NewsViewModel {
   List<Article> articles;
 
   NewsViewModel({this.status, this.totalResults, required this.articles});
+
+  static List<Article> dummyArticles() {
+    return [
+      Article(
+          source: Source(name: 'source name', id: 'id_source'),
+          author: 'author',
+          title: 'Title is this 1',
+          description: 'desc',
+          url: '',
+          urlToImage: 'https://picsum.photos/250',
+          publishedAt: 'Januari 2024'),
+      Article(
+          source: Source(name: 'source name', id: 'id_source'),
+          author: 'author',
+          title: 'Title is this 2',
+          description: 'desc',
+          url: '',
+          urlToImage: 'https://picsum.photos/250',
+          publishedAt: 'Januari 2024'),
+      Article(
+          source: Source(name: 'source name', id: 'id_source'),
+          author: 'author',
+          title: 'Title is this 3',
+          description: 'desc',
+          url: '',
+          urlToImage: 'https://picsum.photos/250',
+          publishedAt: 'Januari 2024'),
+      Article(
+          source: Source(name: 'source name', id: 'id_source'),
+          author: 'author',
+          title: 'Title is this 4',
+          description: 'desc',
+          url: '',
+          urlToImage: 'https://picsum.photos/250',
+          publishedAt: 'Januari 2024'),
+      Article(
+          source: Source(name: 'source name', id: 'id_source'),
+          author: 'author',
+          title: 'Title is this 4',
+          description: 'desc',
+          url: '',
+          urlToImage: 'https://picsum.photos/250',
+          publishedAt: 'Januari 2024'),
+      Article(
+          source: Source(name: 'source name', id: 'id_source'),
+          author: 'author',
+          title: 'Title is this 4',
+          description: 'desc',
+          url: '',
+          urlToImage: 'https://picsum.photos/250',
+          publishedAt: 'Januari 2024'),
+      Article(
+          source: Source(name: 'source name', id: 'id_source'),
+          author: 'author',
+          title: 'Title is this 4',
+          description: 'desc',
+          url: '',
+          urlToImage: 'https://picsum.photos/250',
+          publishedAt: 'Januari 2024'),
+      Article(
+          source: Source(name: 'source name', id: 'id_source'),
+          author: 'author',
+          title: 'Title is this 4',
+          description: 'desc',
+          url: '',
+          urlToImage: 'https://picsum.photos/250',
+          publishedAt: 'Januari 2024'),
+      Article(
+          source: Source(name: 'source name', id: 'id_source'),
+          author: 'author',
+          title: 'Title is this 4',
+          description: 'desc',
+          url: '',
+          urlToImage: 'https://picsum.photos/250',
+          publishedAt: 'Januari 2024'),
+      Article(
+          source: Source(name: 'source name', id: 'id_source'),
+          author: 'author',
+          title: 'Title is this 4',
+          description: 'desc',
+          url: '',
+          urlToImage: 'https://picsum.photos/250',
+          publishedAt: 'Januari 2024'),
+      Article(
+          source: Source(name: 'source name', id: 'id_source'),
+          author: 'author',
+          title: 'Title is this 4',
+          description: 'desc',
+          url: '',
+          urlToImage: 'https://picsum.photos/250',
+          publishedAt: 'Januari 2024'),
+      Article(
+          source: Source(name: 'source name', id: 'id_source'),
+          author: 'author',
+          title: 'Title is this 4',
+          description: 'desc',
+          url: '',
+          urlToImage: 'https://picsum.photos/250',
+          publishedAt: 'Januari 2024'),
+      Article(
+          source: Source(name: 'source name', id: 'id_source'),
+          author: 'author',
+          title: 'Title is this 4',
+          description: 'desc',
+          url: '',
+          urlToImage: 'https://picsum.photos/250',
+          publishedAt: 'Januari 2024'),
+      Article(
+          source: Source(name: 'source name', id: 'id_source'),
+          author: 'author',
+          title: 'Title is this 4',
+          description: 'desc',
+          url: '',
+          urlToImage: 'https://picsum.photos/250',
+          publishedAt: 'Januari 2024'),
+      Article(
+          source: Source(name: 'source name', id: 'id_source'),
+          author: 'author',
+          title: 'Title is this 4',
+          description: 'desc',
+          url: '',
+          urlToImage: 'https://picsum.photos/250',
+          publishedAt: 'Januari 2024'),
+      Article(
+          source: Source(name: 'source name', id: 'id_source'),
+          author: 'author',
+          title: 'Title is this 4',
+          description: 'desc',
+          url: '',
+          urlToImage: 'https://picsum.photos/250',
+          publishedAt: 'Januari 2024'),
+    ];
+  }
 }
 
 class Article {
