@@ -1,19 +1,18 @@
 part of 'landing_bloc.dart';
 
+@immutable
 abstract class LandingState {}
 
 class LandingInitial extends LandingState {}
 
 class LandingLoading extends LandingState {}
 
-class LandingArticleLoaded extends LandingState {
-  late final List<Article> articles;
-
-  LandingArticleLoaded(this.articles);
+class LandingPageLoaded extends LandingState {
+  late final List<Article> data;
+  LandingPageLoaded(this.data);
 }
 
-class LandingError extends LandingState {
+class LandingPageError extends LandingState {
   late final String errorMessage;
-
-  LandingError(this.errorMessage);
+  LandingPageError(this.errorMessage);
 }

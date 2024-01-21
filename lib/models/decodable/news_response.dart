@@ -12,16 +12,12 @@ class NewsResponse {
       totalResults: totalResults,
       articles: articles.map((e) => e.toViewModel()).toList());
 
-  factory NewsResponse.fromJson(Map<String, dynamic> json) {
-    return switch (json) {
-      {
-        'status': String status,
-        'totalResults': int totalResult,
-        'articles': List<ArticleResponse> articles,
-      } =>
-        NewsResponse(status: status, totalResults: totalResult, articles: articles),
-      _ => throw const FormatException('Failed to load album.'),
-    };
+  factory NewsResponse.fromJson(Map<String, dynamic> json){
+    return NewsResponse(
+      status: json["status"] ?? "",
+      totalResults: json["totalResults"] ?? 0,
+      articles: json["articles"] == null ? [] : List<ArticleResponse>.from(json["articles"]!.map((x) => ArticleResponse.fromJson(x))),
+    );
   }
 }
 
@@ -45,6 +41,19 @@ class ArticleResponse {
       this.publishedAt,
       this.content});
 
+  factory ArticleResponse.fromJson(Map<String, dynamic> json){
+    return ArticleResponse(
+      source: json["source"] == null ? null : SourceResponse.fromJson(json["source"]),
+      author: json["author"] ?? "",
+      title: json["title"] ?? "",
+      description: json["description"] ?? "",
+      url: json["url"] ?? "",
+      urlToImage: json["urlToImage"] ?? "https://picsum.photos/200",
+      publishedAt: json["publishedAt"] ?? "",
+      content: json["content"] ?? "",
+    );
+  }
+
   Article toViewModel() => Article(
       source: source?.toViewModel(),
       author: author,
@@ -64,6 +73,13 @@ class SourceResponse {
     this.id,
     this.name,
   });
+
+  factory SourceResponse.fromJson(Map<String, dynamic> json){
+    return SourceResponse(
+      id: json["id"] ?? "",
+      name: json["name"] ?? "",
+    );
+  }
 
   Source toViewModel() => Source(id: id, name: name);
 }

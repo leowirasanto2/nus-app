@@ -1,15 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:nusapp/common/base_api_service.dart';
 import 'package:nusapp/models/decodable/news_response.dart';
-
-abstract class BaseApiService {
-  final String baseUrl = "newsapi.org";
-  final String apiKey =
-      "283968034fbc4db691fd4115a1e2daec"; //regenerate this value from newsapi.org
-
-  Future<dynamic> getAllNewsResponse(String url, String countryCode);
-}
 
 // network_api_service.dart
 class NetworkApiService extends BaseApiService {
@@ -17,19 +10,41 @@ class NetworkApiService extends BaseApiService {
   Future<dynamic> getAllNewsResponse(String url, String countryCode) async {
     dynamic responseJson;
     try {
-      var query = {"country": countryCode, "apiKey": apiKey};
-
+      var query = {"apiKey": apiKey, "country": countryCode};
       var uri = Uri.http(baseUrl, url, query);
+      print(uri);
       final response = await http.get(uri);
-
-      if (response.statusCode == 200) {
-        return NewsResponse.fromJson(
-            jsonDecode(response.body) as Map<String, dynamic>);
-      } else {
-        Exception('Failed to decode');
-      }
+      // responseJson = returnResponse(response);
+      responseJson = jsonDecode(response.body);
     } catch (e) {
-      throw Exception('Failed to fetch news');
+      print(e.toString());
+      // if (e is AppException) {
+      //   throw FetchDataException(e.toString());
+      // } else if (e is SocketException) {
+      //   throw FetchDataException("Socket Exception: ${e.toString()}");
+      // } else {
+      //   throw FetchDataException("Something went wrong: ${e.toString()}");
+      // }
     }
+    return responseJson;
   }
+
+  // dynamic returnResponse(http.Response response) {
+  //   switch (response.statusCode) {
+  //     case 200:
+  //       dynamic responseJson = jsonDecode(response.body);
+  //       return responseJson;
+  //     case 400:
+  //       throw BadRequestException(response.toString());
+  //     case 401:
+  //     case 403:
+  //     case 404:
+  //       dynamic responseJson = jsonDecode(response.body);
+  //       throw UnauthorisedException(responseJson['message']);
+  //     case 500:
+  //     default:
+  //       throw FetchDataException(
+  //           'Error occurred while communication with server with status code : ${response.statusCode}');
+  //   }
+  // }
 }

@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:nusapp/models/viewmodel/news_model.dart';
 
 class LandingMainNewsTileWidget extends StatelessWidget {
-  const LandingMainNewsTileWidget({super.key});
+  LandingMainNewsTileWidget(this.article, {super.key});
+
+  Article article;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
+        const Padding(
           padding: EdgeInsets.symmetric(horizontal: 16),
           child: Text(
             'Breaking News',
@@ -37,23 +40,29 @@ class LandingMainNewsTileWidget extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(16),
-                  child: Image.network(
-                    'https://picsum.photos/400/200',
+                  child: SizedBox(
+                    height: 180,
+                    width: double.maxFinite,
+                    child: Image.network(
+                      article.urlToImage ?? 'https://picsum.photos/400/200',
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 const SizedBox(
                   height: 16,
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(
+                Padding(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 16,
                   ),
                   child: Text(
-                    'Title news',
-                    style: TextStyle(
+                    article.title ?? '',
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
+                    maxLines: 1,
                   ),
                 ),
                 const SizedBox(
@@ -79,9 +88,9 @@ class LandingMainNewsTileWidget extends StatelessWidget {
                           const SizedBox(
                             width: 16,
                           ),
-                          const Text(
-                            'Author name',
-                            style: TextStyle(
+                          Text(
+                            article.source?.name ?? '',
+                            style: const TextStyle(
                               color: Colors.black45,
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
@@ -92,9 +101,9 @@ class LandingMainNewsTileWidget extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const Text(
-                        '10 Jan, 2024',
-                        style: TextStyle(
+                      Text(
+                        article.publishedAt ?? '',
+                        style: const TextStyle(
                           color: Colors.black45,
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
