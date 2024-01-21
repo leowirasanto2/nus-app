@@ -61,6 +61,7 @@ class LandingMainNewsTileWidget extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     maxLines: 1,
                   ),
@@ -75,14 +76,11 @@ class LandingMainNewsTileWidget extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Container(
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                            ),
+                          const SizedBox(
                             width: 35,
                             height: 35,
-                            child: Image.network(
-                              'https://cdn.dribbble.com/users/3416941/avatars/normal/2d977a5554be90b8731ce1ea8336de38.jpg?1700737919',
+                            child: CircleAvatar(
+                              child: Icon(Icons.person_outline),
                             ),
                           ),
                           const SizedBox(

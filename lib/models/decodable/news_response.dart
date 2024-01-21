@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:intl/intl.dart';
 import 'package:nusapp/models/viewmodel/news_model.dart';
 
 class NewsResponse {
@@ -19,7 +20,7 @@ class NewsResponse {
 
     if (articles.length > 1) {
       for (var i = 0; i < articles.length; i++) {
-        if (i>0) {
+        if (i > 0) {
           otherArticle.add(articles[i].toViewModel());
         }
       }
@@ -38,7 +39,7 @@ class NewsResponse {
       articles: json["articles"] == null
           ? []
           : List<ArticleResponse>.from(
-              json["articles"]!.map((x) => ArticleResponse.fromJson(x))),
+              json["articles"]!.map((e) => ArticleResponse.fromJson(e))),
     );
   }
 }
@@ -78,15 +79,22 @@ class ArticleResponse {
     );
   }
 
-  Article toViewModel() => Article(
-      source: source?.toViewModel(),
-      author: author,
-      title: title,
-      description: description,
-      url: url,
-      urlToImage: urlToImage,
-      publishedAt: publishedAt,
-      content: content);
+  Article toViewModel() {
+    String stringDate = publishedAt ?? '';
+    DateTime dateTime = DateTime.parse(stringDate);
+    DateFormat format = DateFormat("MMM dd, yy");
+    String formattedDate = format.format(dateTime);
+
+    return Article(
+        source: source?.toViewModel(),
+        author: author,
+        title: title,
+        description: description,
+        url: url,
+        urlToImage: urlToImage,
+        publishedAt: formattedDate,
+        content: content);
+  }
 }
 
 class SourceResponse {
