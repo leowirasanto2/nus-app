@@ -2,6 +2,11 @@
 
 a news app using bloc pattern
 
+# preview
+
+![image](https://github.com/leowirasanto2/nus-app/assets/156512514/7c56646b-59b4-4f72-9bd5-b789c175fe06)
+
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
