@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nusapp/blocs/landing/landing_bloc.dart';
-import 'package:nusapp/models/viewmodel/news_model.dart';
 import 'package:nusapp/modules/landing/views/landing_header_widget.dart';
 import 'package:nusapp/modules/landing/views/landing_main_news_tile_widget.dart';
 import 'package:nusapp/modules/landing/views/landing_news_list_widget.dart';
@@ -25,7 +24,7 @@ class LandingPage extends StatelessWidget {
             child: Text('error load news'),
           );
         } else if (state is LandingPageLoaded) {
-          final articleData = state.data;
+          final viewModel = state.data;
           return CustomScrollView(
             slivers: [
               SliverAppBar(
@@ -38,8 +37,8 @@ class LandingPage extends StatelessWidget {
                       const SizedBox(
                         height: 8,
                       ),
-                      if (articleData.isNotEmpty) ...[
-                        LandingMainNewsTileWidget(articleData[0]),
+                      if (viewModel.headline != null) ...[
+                        LandingMainNewsTileWidget(viewModel.headline!),
                       ],
                     ],
                   ),
@@ -52,8 +51,9 @@ class LandingPage extends StatelessWidget {
               ),
               SliverFixedExtentList(
                   delegate: SliverChildBuilderDelegate((context, index) {
-                    return LandingNewsListWidget(articleData[index]);
-                  }, childCount: articleData.length),
+                    return LandingNewsListWidget(
+                        viewModel.otherArticles[index]);
+                  }, childCount: viewModel.otherArticles.length),
                   itemExtent: 80)
             ],
           );

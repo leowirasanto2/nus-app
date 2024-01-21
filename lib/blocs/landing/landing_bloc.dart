@@ -27,7 +27,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
       .then((value) {
         NewsResponse response = NewsResponse.fromJson(value);
         if (response.articles.isEmpty == false) {
-          emit(LandingPageLoaded(response.toViewModel().articles));
+          emit(LandingPageLoaded(response.toViewModel()));
         } else {
           emit(LandingPageError('bahlul'));
         }

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:nusapp/models/viewmodel/news_model.dart';
 
 class NewsResponse {
@@ -7,16 +9,36 @@ class NewsResponse {
 
   NewsResponse({this.status, this.totalResults, required this.articles});
 
-  NewsViewModel toViewModel() => NewsViewModel(
-      status: status,
-      totalResults: totalResults,
-      articles: articles.map((e) => e.toViewModel()).toList());
+  LandingViewModel toViewModel() {
+    Article? topArticle;
+    List<Article> otherArticle = [];
 
-  factory NewsResponse.fromJson(Map<String, dynamic> json){
+    if (articles.isNotEmpty) {
+      topArticle = articles.first.toViewModel();
+    }
+
+    if (articles.length > 1) {
+      for (var i = 0; i < articles.length; i++) {
+        if (i>0) {
+          otherArticle.add(articles[i].toViewModel());
+        }
+      }
+    }
+
+    return LandingViewModel(
+      headline: topArticle,
+      otherArticles: otherArticle,
+    );
+  }
+
+  factory NewsResponse.fromJson(Map<String, dynamic> json) {
     return NewsResponse(
       status: json["status"] ?? "",
       totalResults: json["totalResults"] ?? 0,
-      articles: json["articles"] == null ? [] : List<ArticleResponse>.from(json["articles"]!.map((x) => ArticleResponse.fromJson(x))),
+      articles: json["articles"] == null
+          ? []
+          : List<ArticleResponse>.from(
+              json["articles"]!.map((x) => ArticleResponse.fromJson(x))),
     );
   }
 }
@@ -41,9 +63,11 @@ class ArticleResponse {
       this.publishedAt,
       this.content});
 
-  factory ArticleResponse.fromJson(Map<String, dynamic> json){
+  factory ArticleResponse.fromJson(Map<String, dynamic> json) {
     return ArticleResponse(
-      source: json["source"] == null ? null : SourceResponse.fromJson(json["source"]),
+      source: json["source"] == null
+          ? null
+          : SourceResponse.fromJson(json["source"]),
       author: json["author"] ?? "",
       title: json["title"] ?? "",
       description: json["description"] ?? "",
@@ -74,7 +98,7 @@ class SourceResponse {
     this.name,
   });
 
-  factory SourceResponse.fromJson(Map<String, dynamic> json){
+  factory SourceResponse.fromJson(Map<String, dynamic> json) {
     return SourceResponse(
       id: json["id"] ?? "",
       name: json["name"] ?? "",
