@@ -34,12 +34,9 @@ class LandingNewsListWidget extends StatelessWidget {
                 Text(
                   article?.title ?? '',
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 17),
+                      fontWeight: FontWeight.bold, fontSize: 14),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
-                ),
-                const SizedBox(
-                  height: 8,
                 ),
                 // Subtitle
                 Row(

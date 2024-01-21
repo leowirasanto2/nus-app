@@ -1,3 +1,4 @@
 class LandingRepo {
-  Future<dynamic> getLandingArticles(String countryCode) async {}
+  Future<dynamic> getNewsData(String countryCode) async {}
+  Future<dynamic> getCountriesData() async {}
 }
