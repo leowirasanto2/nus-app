@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nusapp/common/string_extension.dart';
 
 class LandingHeaderWidget extends StatelessWidget {
   const LandingHeaderWidget({super.key});
@@ -13,22 +14,20 @@ class LandingHeaderWidget extends StatelessWidget {
           children: [
             Row(
               children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
+                const SizedBox(
                   width: 45,
                   height: 45,
-                  child: Image.network(
-                    'https://cdn.dribbble.com/users/3416941/avatars/normal/2d977a5554be90b8731ce1ea8336de38.jpg?1700737919',
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        'https://avatars.githubusercontent.com/u/156512514?v=4'),
                   ),
                 ),
                 const SizedBox(
                   width: 16,
                 ),
-                const Text(
-                  '10 Jan, 2024',
-                  style: TextStyle(
+                Text(
+                  (DateTime.now().toString().formattedDate(expectedFormat: 'dd MMMM yyyy')).orEmpty,
+                  style: const TextStyle(
                     color: Colors.black45,
                     fontWeight: FontWeight.bold,
                     fontSize: 17,

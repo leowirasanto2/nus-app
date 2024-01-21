@@ -8,7 +8,7 @@ class LandingInitial extends LandingState {}
 class LandingLoading extends LandingState {}
 
 class LandingPageLoaded extends LandingState {
-  late final List<Article> data;
+  late final LandingViewModel data;
   LandingPageLoaded(this.data);
 }
 
