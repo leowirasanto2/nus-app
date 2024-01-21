@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:intl/intl.dart';
+import 'package:nusapp/common/string_extension.dart';
 import 'package:nusapp/models/viewmodel/news_model.dart';
 
 class NewsResponse {
@@ -80,11 +81,6 @@ class ArticleResponse {
   }
 
   Article toViewModel() {
-    String stringDate = publishedAt ?? '';
-    DateTime dateTime = DateTime.parse(stringDate);
-    DateFormat format = DateFormat("MMM dd, yy");
-    String formattedDate = format.format(dateTime);
-
     return Article(
         source: source?.toViewModel(),
         author: author,
@@ -92,7 +88,7 @@ class ArticleResponse {
         description: description,
         url: url,
         urlToImage: urlToImage,
-        publishedAt: formattedDate,
+        publishedAt: publishedAt.formattedDate(),
         content: content);
   }
 }

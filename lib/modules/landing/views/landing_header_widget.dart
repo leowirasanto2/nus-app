@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:nusapp/common/string_extension.dart';
 
 class LandingHeaderWidget extends StatelessWidget {
   const LandingHeaderWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-
-    DateTime currentDate = DateTime.now();
-    DateFormat format = DateFormat("dd MMM, yyyy");
-    String formattedDate = format.format(currentDate);
-
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16, 25, 16, 16),
@@ -31,7 +26,7 @@ class LandingHeaderWidget extends StatelessWidget {
                   width: 16,
                 ),
                 Text(
-                  formattedDate,
+                  (DateTime.now().toString().formattedDate(expectedFormat: 'dd MMMM yyyy')).orEmpty,
                   style: const TextStyle(
                     color: Colors.black45,
                     fontWeight: FontWeight.bold,
