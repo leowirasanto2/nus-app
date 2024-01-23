@@ -5,15 +5,26 @@ import 'package:nusapp/common/repo/newslist/news_list_repo.dart';
 
 class NewsListRepoImp extends NewsListRepo {
   final BaseApiService _apiService = NetworkApiService();
-  static const int _pageSize = 10;
 
   //. This method read data from server
   @override
-  Future getNewsList(String countryCode) async {
+  Future getNewsList(String? countryCode, int pageSize) async {
     try {
-      dynamic response = await _apiService.getAllNewsResponse(ApiEndPoints().getNewsList, countryCode);
+      dynamic response = await _apiService.getAllNewsResponse(
+          ApiEndPoints().getNewsList, countryCode, pageSize);
       return response;
-    } catch(e) {
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future searchNews(String keyword, String? countryCode, int pageSize) async {
+    try {
+      dynamic response = await _apiService.searchAllNewsResponse(
+          ApiEndPoints().getNewsList, keyword, countryCode, pageSize);
+      return response;
+    } catch (e) {
       rethrow;
     }
   }

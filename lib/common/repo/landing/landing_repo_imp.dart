@@ -5,13 +5,12 @@ import 'package:nusapp/common/repo/landing/landing_repo.dart';
 
 class LandingRepoImp extends LandingRepo {
   final BaseApiService _apiService = NetworkApiService();
-  static const int _pageSize = 10;
 
   //. This method read data from server
   @override
-  Future getNewsData(String countryCode) async {
+  Future getNewsData(String countryCode, int pageSize) async {
     try {
-      dynamic response = await _apiService.getAllNewsResponse(ApiEndPoints().getHeadlineNews, countryCode);
+      dynamic response = await _apiService.getAllNewsResponse(ApiEndPoints().getHeadlineNews, countryCode, pageSize);
       return response;
     } catch(e) {
       rethrow;

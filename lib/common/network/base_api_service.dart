@@ -3,5 +3,6 @@ abstract class BaseApiService {
   final String apiKey =
       "283968034fbc4db691fd4115a1e2daec"; //regenerate this value from newsapi.org
 
-  Future<dynamic> getAllNewsResponse(String url, String countryCode);
+  Future<dynamic> getAllNewsResponse(String url, String? countryCode, int pageSize);
+  Future<dynamic> searchAllNewsResponse(String url, String keyword, String? countryCode, int pageSize);
 }

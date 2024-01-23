@@ -15,7 +15,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
 
   LandingBloc() : super(LandingInitial()) {
     on<LandingFetchDataEvent>(_fetchNewsList);
-    on<LandingNavigateToNewsList>(_navigateToListPage);
+    on<LandingNavigateToNewsListEvent>(_navigateToListPage);
   }
 
   FutureOr<void> _fetchNewsList(
@@ -23,7 +23,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
     if (event is LandingFetchDataEvent) {
       emit(LandingLoading());
 
-      await landingRepo.getNewsData(event.countryCode).then((value) {
+      await landingRepo.getNewsData(event.countryCode, 15).then((value) {
         NewsResponse response = NewsResponse.fromJson(value);
         if (response.articles.isEmpty == false) {
           emit(LandingPageLoaded(response.toLandingViewModel()));
@@ -35,7 +35,7 @@ class LandingBloc extends Bloc<LandingEvent, LandingState> {
   }
 
   void _navigateToListPage(LandingEvent event, Emitter<LandingState> emit) {
-    if (event is LandingNavigateToNewsList) {
+    if (event is LandingNavigateToNewsListEvent) {
       emit(LandingNavigateToNewsListState());
     }
   }

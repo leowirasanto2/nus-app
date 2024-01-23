@@ -8,6 +8,4 @@ class LandingFetchDataEvent extends LandingEvent {
   LandingFetchDataEvent(this.countryCode);
 }
 
-class LandingNavigateToNewsList extends LandingEvent {
-
-}
+class LandingNavigateToNewsListEvent extends LandingEvent {}
