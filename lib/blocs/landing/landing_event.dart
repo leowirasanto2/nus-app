@@ -7,3 +7,7 @@ class LandingFetchDataEvent extends LandingEvent {
   final String countryCode;
   LandingFetchDataEvent(this.countryCode);
 }
+
+class LandingNavigateToNewsList extends LandingEvent {
+
+}

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nusapp/models/viewmodel/news_model.dart';
 
-class LandingNewsListWidget extends StatelessWidget {
-  const LandingNewsListWidget(this.article, {super.key});
+class LandingNewsItemListWidget extends StatelessWidget {
+  const LandingNewsItemListWidget(this.article, {super.key});
 
   final Article? article;
 

@@ -1,7 +1,6 @@
-import 'dart:ffi';
-
-import 'package:intl/intl.dart';
-import 'package:nusapp/common/string_extension.dart';
+import 'package:nusapp/common/extensions/string_extension.dart';
+import 'package:nusapp/models/viewmodel/landing_view_model.dart';
+import 'package:nusapp/models/viewmodel/news_list_view_model.dart';
 import 'package:nusapp/models/viewmodel/news_model.dart';
 
 class NewsResponse {
@@ -11,7 +10,12 @@ class NewsResponse {
 
   NewsResponse({this.status, this.totalResults, required this.articles});
 
-  LandingViewModel toViewModel() {
+  NewsListViewModel toNewsListViewModel() {
+    return NewsListViewModel(
+        newsList: articles.map((e) => e.toViewModel()).toList());
+  }
+
+  LandingViewModel toLandingViewModel() {
     Article? topArticle;
     List<Article> otherArticle = [];
 

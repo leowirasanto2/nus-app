@@ -1,10 +1,3 @@
-class LandingViewModel {
-  Article? headline;
-  List<Article> otherArticles;
-
-  LandingViewModel({this.headline, required this.otherArticles});
-}
-
 class Article {
   Source? source;
   String? author;
