@@ -16,6 +16,7 @@ class NewsListBloc extends Bloc<NewsListEvent, NewsListState> {
   NewsListBloc() : super(NewsListInitial()) {
     on<NewsListFetchSuggestionEvent>(_fetchNewsSuggestionList);
     on<NewsListFetchSearchNewsEvent>(_searchNewsList);
+    on<NewsListPageSearchKeywordMinimumErrorEvent>(_searchKeywordNotMeetMinimum);
   }
 
   FutureOr<void> _fetchNewsSuggestionList(
@@ -50,6 +51,13 @@ class NewsListBloc extends Bloc<NewsListEvent, NewsListState> {
           emit(NewsListPageError('ente bahlul'));
         }
       });
+    }
+  }
+
+  FutureOr<void> _searchKeywordNotMeetMinimum(
+      NewsListEvent event, Emitter<NewsListState> emit) async {
+    if (event is NewsListPageSearchKeywordMinimumErrorEvent) {
+      emit(NewsListPageSearchKeywordMinimumErrorState());
     }
   }
 }

@@ -99,7 +99,7 @@ class LandingPage extends StatelessWidget {
                   ..add(
                     NewsListFetchSuggestionEvent(null, 4),
                   ),
-              )
+              ),
             ],
             child: const NewsListPage(),
           );

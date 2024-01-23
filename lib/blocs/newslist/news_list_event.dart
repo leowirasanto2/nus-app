@@ -23,3 +23,5 @@ class NewsListFetchSuggestionEvent extends NewsListEvent {
 
   NewsListFetchSuggestionEvent(this.countryCode, this.pageSize);
 }
+
+class NewsListPageSearchKeywordMinimumErrorEvent extends NewsListEvent {}

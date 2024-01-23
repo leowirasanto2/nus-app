@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nusapp/blocs/newslist/news_list_bloc.dart';
@@ -8,34 +10,19 @@ class NewsListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Timer? debounce;
+
     return Scaffold(
       appBar: AppBar(
-        title: SearchAnchor(
-          builder: (context, controller) {
-            return SearchBar(
-              onSubmitted: (text) {
-                context.read<NewsListBloc>().add(
-                      NewsListFetchSearchNewsEvent(text, null, 15),
-                    );
-              },
-              controller: controller,
-              hintText: 'type here to search news',
-              leading: const Icon(Icons.search),
-              onChanged: (text) {
-                print(text);
-              },
-            );
-          },
-          suggestionsBuilder: (context, controller) {
-            return List<ListTile>.generate(5, (int index) {
-              final String item = 'item $index';
-              return ListTile(
-                title: Text(item),
-                onTap: () {
-                  print('suggestion tapped');
-                },
-              );
-            });
+        title: TextField(
+          controller: TextEditingController(),
+          autofocus: true,
+          decoration: const InputDecoration(
+            hintText: 'type to search news topic',
+            border: InputBorder.none,
+          ),
+          onChanged: (keyword) {
+            onSearchTextChanged(context, keyword, debounce);
           },
         ),
       ),
@@ -53,23 +40,60 @@ class NewsListPage extends StatelessWidget {
                 switch (state) {
                   case NewsListLoading _:
                     return const Center(
-                      child: Text('loading'),
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.youtube_searched_for_outlined,
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          Text(
+                            'searching your news',
+                          ),
+                        ],
+                      ),
                     );
                   case NewsListPageLoaded _:
-                    return Container(
-                      padding: const EdgeInsets.only(top: 16),
-                      child: ListView.builder(
-                        itemCount: state.data.newsList.length,
-                        itemExtent: 80,
-                        itemBuilder: (context, index) {
-                          return LandingNewsItemListWidget(
-                              state.data.newsList[index]);
-                        },
+                    return ListView.builder(
+                      itemCount: state.data.newsList.length,
+                      itemExtent: 80,
+                      itemBuilder: (context, index) {
+                        return LandingNewsItemListWidget(
+                            state.data.newsList[index]);
+                      },
+                    );
+                  case NewsListPageSearchKeywordMinimumErrorState _:
+                    return const Center(
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.keyboard_alt_outlined,
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          Text(
+                            'Please type at least 3 characters',
+                          ),
+                        ],
                       ),
                     );
                   case NewsListPageError _:
                     return const Center(
-                      child: Text('error'),
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.search_off,
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          Text(
+                            'Sorry we cannot find your news',
+                          ),
+                        ],
+                      ),
                     );
                   default:
                     return const Center(
@@ -82,5 +106,29 @@ class NewsListPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void onSearchTextChanged(
+      BuildContext context, String keyword, Timer? debounce) {
+    if (keyword.isEmpty) {
+      context.read<NewsListBloc>().add(
+            NewsListFetchSuggestionEvent('us', 4),
+          );
+      return;
+    }
+
+    if (keyword.isNotEmpty && keyword.length < 3) {
+      context.read<NewsListBloc>().add(
+            NewsListPageSearchKeywordMinimumErrorEvent(),
+          );
+      return;
+    }
+
+    if (debounce?.isActive == true) debounce?.cancel();
+    debounce = Timer(const Duration(milliseconds: 500), () {
+      context.read<NewsListBloc>().add(
+            NewsListFetchSearchNewsEvent(keyword, null, 15),
+          );
+    });
   }
 }
