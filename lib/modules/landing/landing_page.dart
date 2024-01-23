@@ -46,7 +46,7 @@ class LandingPage extends StatelessWidget {
                     onSearchTap: () {
                       context
                           .read<LandingBloc>()
-                          .add(LandingNavigateToNewsList());
+                          .add(LandingNavigateToNewsListEvent());
                     },
                   ),
                   flexibleSpace: FlexibleSpaceBar(
@@ -97,9 +97,9 @@ class LandingPage extends StatelessWidget {
               BlocProvider<NewsListBloc>(
                 create: (context) => NewsListBloc()
                   ..add(
-                    NewsListFetchDataEvent('us'),
+                    NewsListFetchSuggestionEvent(null, 4),
                   ),
-              )
+              ),
             ],
             child: const NewsListPage(),
           );

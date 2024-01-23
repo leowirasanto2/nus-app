@@ -14,22 +14,50 @@ class NewsListBloc extends Bloc<NewsListEvent, NewsListState> {
   final newsListRepo = NewsListRepoImp();
 
   NewsListBloc() : super(NewsListInitial()) {
-    on<NewsListFetchDataEvent>(_fetchNewsList);
+    on<NewsListFetchSuggestionEvent>(_fetchNewsSuggestionList);
+    on<NewsListFetchSearchNewsEvent>(_searchNewsList);
+    on<NewsListPageSearchKeywordMinimumErrorEvent>(_searchKeywordNotMeetMinimum);
   }
 
-  FutureOr<void> _fetchNewsList(
+  FutureOr<void> _fetchNewsSuggestionList(
       NewsListEvent event, Emitter<NewsListState> emit) async {
-    if (event is NewsListFetchDataEvent) {
+    if (event is NewsListFetchSuggestionEvent) {
       emit(NewsListLoading());
-
-      await newsListRepo.getNewsList(event.countryCode).then((value) {
+      await newsListRepo
+          .searchNews('crypto', event.countryCode, event.pageSize)
+          .then((value) {
         NewsResponse response = NewsResponse.fromJson(value);
-        if (response.articles.isEmpty) {
+        if (response.articles.isNotEmpty) {
           emit(NewsListPageLoaded(response.toNewsListViewModel()));
         } else {
           emit(NewsListPageError('ente bahlul'));
         }
       });
+    }
+  }
+
+  FutureOr<void> _searchNewsList(
+      NewsListEvent event, Emitter<NewsListState> emit) async {
+    if (event is NewsListFetchSearchNewsEvent) {
+      emit(NewsListLoading());
+
+      await newsListRepo
+          .searchNews(event.keyword, event.countryCode, event.pageSize)
+          .then((value) {
+        NewsResponse response = NewsResponse.fromJson(value);
+        if (response.articles.isNotEmpty) {
+          emit(NewsListPageLoaded(response.toNewsListViewModel()));
+        } else {
+          emit(NewsListPageError('ente bahlul'));
+        }
+      });
+    }
+  }
+
+  FutureOr<void> _searchKeywordNotMeetMinimum(
+      NewsListEvent event, Emitter<NewsListState> emit) async {
+    if (event is NewsListPageSearchKeywordMinimumErrorEvent) {
+      emit(NewsListPageSearchKeywordMinimumErrorState());
     }
   }
 }

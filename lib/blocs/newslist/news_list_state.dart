@@ -18,3 +18,5 @@ class NewsListPageError extends NewsListState {
 
   NewsListPageError(this.errorMessage);
 }
+
+class NewsListPageSearchKeywordMinimumErrorState extends NewsListState {}
